@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broken Access Control Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: red;
+        }
+        .warning {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Broken Access Control - Training Example</h1>
+    <p class="warning">Warning: This is a training page that demonstrates broken access control.</p>
+
+    <h2>View Sensitive Info of Another User</h2>
+    <form method="get" action="{% url 'broken_access_control' %}">
+        <label for="username">Enter username to view sensitive info:</label>
+        <input type="text" name="username" id="username" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <h3>Important Notes:</h3>
+    <ul>
+        <li>Users should only be able to view their own data, not others' sensitive information.</li>
+        <li>This page illustrates how a vulnerability occurs when access control is not properly enforced.</li>
+        <li>Fixing this issue involves adding authorization checks to ensure users can only access their own data.</li>
+    </ul>
+</body>
+</html>

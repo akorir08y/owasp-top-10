@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensitive Data Exposure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #FF5733;
+        }
+        h2 {
+            color: #c0392b;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        ul {
+            margin-top: 20px;
+            padding-left: 20px;
+        }
+        .warning {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sensitive Data Exposure of Users to perform User enumeration</h1>
+    <h2>Vulnerable User Data</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Password (PBKDF2 Hash)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.password }}</td>
+                    <td><a href="{% url 'user_details' user.id %}">View Details</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+  
+    <ul>
+        <li>Use a secure hashing algorithm like bcrypt, Argon2, or PBKDF2 to hash passwords in Django. Use Django's built-in <code>make_password</code> and <code>check_password</code> functions to properly hash and check passwords.</li>
+        <li>Always add a unique, random <strong>salt</strong> to each password hash to prevent rainbow table and other attacks.</li>
+        <li>Ensure that cryptographic settings, such as <code>SECRET_KEY</code> and database configurations, use secure, randomly generated values and are kept secret.</li>
+    </ul>
+</body>
+</html>

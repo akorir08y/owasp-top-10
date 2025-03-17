@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerable Page - XSS Example</title>
+</head>
+<body>
+    <h1>Welcome to the Vulnerable Page</h1>
+    
+    <!-- Form to input the user's name -->
+    <form action="" method="GET">
+        <label for="username">Enter your name:</label>
+        <input type="text" id="username" name="username">
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Display the entered name without sanitization -->
+    <p>Hello, <span id="greeting"></span>!</p>
+
+    <script>
+        // Get the 'username' parameter from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username');
+        
+        // Display the username directly without sanitizing it
+        document.getElementById('greeting').innerHTML = username;
+    </script>
+</body>
+</html>
