@@ -31,13 +31,13 @@
 <body>
     <h1>Training Links</h1>
     <ul>
-        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'login' %}">Insecure Authentication</a></li>
         <li><a href="{% url 'sensitive_data_exposure' %}">IDOR (Insecure Direct Object Reference)</a></li>
         <li><a href="{% url 'hardcoded_secrets' %}">Hardcoded Secrets</a></li>
         <li><a href="{% url 'swagger' %}">Swagger</a></li>
         <li><a href="{% url 'xss' %}">XSS (Cross-Site Scripting)</a></li>
-        <li><a href="{% url 'sql_injection' %}">SQL Injection</a></li>
-        <li><a href="{% url 'admin' %}">Admin Panel</a></li>
+        <li><a href="{% url 'search' %}">SQL Injection</a></li>
+        <li><a href="{% url 'admin' %}">Broken Access Control</a></li>
     </ul>
 </body>
 </html>

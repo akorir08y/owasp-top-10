@@ -106,3 +106,9 @@ def search_user(request):
         cursor.execute(f"SELECT * FROM auth_user WHERE username = '{query}'")  # Vulnerable query
         row = cursor.fetchone()
     return HttpResponse(f"User: {row}")
+
+# Search for a user (SQL Injection): http://127.0.0.1:8000/training/search-user/?query=test' OR '1'='1
+
+def search_page(request):
+    return render(request, 'search.html')
+
