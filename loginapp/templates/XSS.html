@@ -17,6 +17,10 @@
 
     <!-- Display the entered name without sanitization -->
     <p>Hello, <span id="greeting"></span>!</p>
+    <p>The page is vulnerable to XSS. Craft an XSS payload and make the page issues an Alert</p>
+    <!-- '><img src=x onerror=alert('XSS Found')> -->
+
+    <!-- Comments left unchecked can always lead to information being exposed. Congrats on inspecting elements and viewing the page source -->
 
     <script>
         // Get the 'username' parameter from the URL

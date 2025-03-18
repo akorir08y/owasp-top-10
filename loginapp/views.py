@@ -1,35 +1,39 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.db import connection
 from django.contrib.auth.models import User
 from .models import UserProfile
 from django.http import JsonResponse
 from django.conf import settings
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, get_object_or_404
+from .models import User
 
 # Dummy credentials for the purpose of training
 valid_username = 'admin'
 valid_password = 'password123'
 
 def login_view(request):
+    error = None
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # **Insecure Password Storage and SQL Injection**
-        # Vulnerable check directly against hardcoded credentials
-        # **Unsafe: This can be exploited via SQL injection**
-        cursor = connection.cursor()
-        cursor.execute(f"SELECT * FROM auth_user WHERE username = '{username}' AND password = '{password}'")
-        user = cursor.fetchall()
-
-        if username == valid_username and password == valid_password:
-            return HttpResponse(f"Login successful! Welcome, {username}")
+         # Vulnerability 1: Reveals if a user exists
+        print(User.objects.all)
+        if not User.objects.filter(username=username).exists():
+            error = "User does not exist."
         else:
-            # **Cross-Site Scripting (XSS) vulnerability** 
-            # The username is displayed directly, which could allow XSS attacks.
-            return HttpResponse(f"Login failed! Invalid username or password. <br> {username}")
+            # Vulnerability 2: No rate limiting or account lockout
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                # Vulnerability 3: Logs in without additional checks (e.g., 2FA)
+                login(request, user)
+                return redirect('home')  # Redirect to a dummy home page
+            else:
+                error = "Incorrect password."
     
-    return render(request, 'login.html')
+    return render(request, 'login.html', {'error': error})
 
 
 def broken_access_control(request):
@@ -91,9 +95,6 @@ def get_training_menu(request):
 def hardcoded_secrets_js(request):
     return render(request, 'js/hardcoded.js')
 
-from django.shortcuts import render, get_object_or_404
-from .models import User
-
 def user_details(request, user_id):
     # Fetch the user by ID without any authorization check (IDOR vulnerability)
     user = get_object_or_404(User, id=user_id)
@@ -112,3 +113,6 @@ def search_user(request):
 def search_page(request):
     return render(request, 'search.html')
 
+
+def home(request):
+    return render(request, 'home.html')
