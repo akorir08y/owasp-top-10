@@ -1,0 +1,59 @@
+swagger: "2.0"
+info:
+  title: Vulnerable API
+  description: A dummy API demonstrating sensitive data exposure
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      summary: Get a list of users
+      description: Returns a list of all users with sensitive information exposed.
+      responses:
+        200:
+          description: A list of users
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                username:
+                  type: string
+                  example: "admin"
+                password:
+                  type: string
+                  example: "password123"
+                email:
+                  type: string
+                  example: "admin@example.com"
+                credit_card_number:
+                  type: string
+                  example: "1234-5678-9012-3456"
+  /login:
+    post:
+      summary: Authenticate a user
+      description: Authenticate a user with plaintext credentials.
+      parameters:
+        - name: username
+          in: body
+          required: true
+          type: string
+          example: "admin"
+        - name: password
+          in: body
+          required: true
+          type: string
+          example: "password123"
+      responses:
+        200:
+          description: Authentication successful
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        401:
+          description: Invalid credentials

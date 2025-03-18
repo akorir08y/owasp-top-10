@@ -68,7 +68,10 @@ def hardcoded_secrets(request):
     return render(request, 'hardcoded.html')
 
 def exposed_swagger(request):
-    return render(request, 'swagger.json')
+    return render(request, 'swagger.html')
+
+def exposed_swagger_file(request):
+    return render(request, 'swagger.yaml')
 
 def displayed_xss(request):
     return render(request, 'XSS.html')

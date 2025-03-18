@@ -11,6 +11,7 @@ urlpatterns = [
     path('hardcoded_secrets/', views.hardcoded_secrets, name='hardcoded_secrets'),
     path('hardcoded_secrets/js/hardcoded.js', views.hardcoded_secrets_js, name='javascript_file'),
     path('swagger/', views.exposed_swagger, name='swagger'),
+    path('swagger-file/', views.exposed_swagger_file, name='swagger-file'),
     path('xss/', views.displayed_xss, name='xss'),
     path('id/', views.sql_injection, name='check_id'),
     path('administrator/', views.get_admin_page, name='admin'),
